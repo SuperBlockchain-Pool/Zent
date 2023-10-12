@@ -35,6 +35,30 @@ namespace Utilities
         return parsed.extraData;
     }
 
+    Crypto::SecretKey getTransactionPrivateKeyFromExtra(const std::vector<uint8_t> &extra)
+    {
+        const ParsedExtra parsed = parseExtra(extra);
+        return parsed.transactionPrivateKey;
+    }
+
+    Crypto::PublicKey getRecipientPublicSpendKey(const std::vector<uint8_t> &extra)
+    {
+        const ParsedExtra parsed = parseExtra(extra);
+        return parsed.recipientPublicSpendKey;
+    }
+
+    Crypto::PublicKey getRecipientPublicViewKey(const std::vector<uint8_t> &extra)
+    {
+        const ParsedExtra parsed = parseExtra(extra);
+        return parsed.recipientPublicViewKey;
+    }
+
+    std::vector<uint8_t> getPoolNonceFromExtra(const std::vector<uint8_t> &extra)
+    {
+        const ParsedExtra parsed = parseExtra(extra);
+        return parsed.poolNonce;
+    }
+
     ParsedExtra parseExtra(const std::vector<uint8_t> &extra)
     {
         ParsedExtra parsed {Constants::NULL_PUBLIC_KEY, std::string(), {0, Constants::NULL_HASH}};
@@ -44,11 +68,22 @@ namespace Utilities
         bool seenExtraData = false;
         bool seenPaymentID = false;
         bool seenMergedMiningTag = false;
+        bool seenRecipientPublicViewKey = false;
+        bool seenRecipientPublicSpendKey = false;
+        bool seenTransactionPrivateKey = false;
+        bool seenPoolNonce = false;
 
         for (auto it = extra.begin(); it < extra.end(); it++)
         {
             /* Nothing else to parse. */
-            if (seenPubKey && seenPaymentID && seenMergedMiningTag && seenExtraData)
+            if (seenPubKey
+             && seenPaymentID
+             && seenMergedMiningTag
+             && seenExtraData
+             && seenRecipientPublicViewKey
+             && seenRecipientPublicSpendKey
+             && seenTransactionPrivateKey
+             && seenPoolNonce)
             {
                 break;
             }
@@ -196,6 +231,72 @@ namespace Utilities
                     it += readDepthSize + 32;
 
                     seenMergedMiningTag = true;
+
+                    /* Can continue parsing */
+                    continue;
+                }
+            }
+
+            if (c == Constants::TX_EXTRA_RECIPIENT_PUBLIC_VIEW_KEY_IDENTIFIER && elementsRemaining > 32 && !seenRecipientPublicViewKey)
+            {
+                /* Copy 32 chars, beginning from the next char */
+                std::copy(it + 1, it + 1 + 32, std::begin(parsed.recipientPublicViewKey.data));
+
+                /* Advance past the public view key */
+                it += 32;
+
+                seenRecipientPublicViewKey = true;
+
+                /* And continue parsing. */
+                continue;
+            }
+
+            if (c == Constants::TX_EXTRA_RECIPIENT_PUBLIC_SPEND_KEY_IDENTIFIER && elementsRemaining > 32 && !seenRecipientPublicSpendKey)
+            {
+                /* Copy 32 chars, beginning from the next char */
+                std::copy(it + 1, it + 1 + 32, std::begin(parsed.recipientPublicSpendKey.data));
+
+                /* Advance past the public spend key */
+                it += 32;
+
+                seenRecipientPublicSpendKey = true;
+
+                /* And continue parsing. */
+                continue;
+            }
+
+            if (c == Constants::TX_EXTRA_TRANSACTION_PRIVATE_KEY_IDENTIFIER && elementsRemaining > 32 && !seenTransactionPrivateKey)
+            {
+                /* Copy 32 chars, beginning from the next char */
+                std::copy(it + 1, it + 1 + 32, std::begin(parsed.transactionPrivateKey.data));
+
+                /* Advance past the private key */
+                it += 32;
+
+                seenTransactionPrivateKey = true;
+
+                /* And continue parsing. */
+                continue;
+            }
+
+            if (c == Constants::TX_EXTRA_POOL_NONCE && elementsRemaining > 1 && !seenPoolNonce)
+            {
+                /* Get the length of the following data in the field */
+                size_t nonceSize = 0;
+
+                const size_t readNonceSize = Tools::read_varint(it + 1, extra.end(), nonceSize);
+
+                if (elementsRemaining > readNonceSize + nonceSize)
+                {
+                    /* Copy the data into the parsed extraData field */
+                    std::copy(it + 1 + readNonceSize, it + 1 + readNonceSize + nonceSize, std::back_inserter(parsed.poolNonce));
+
+                    seenPoolNonce = true;
+
+                    /* Advance past the mm tag by length field (readDataSize) + */
+                    it += readNonceSize + nonceSize;
+
+                    seenPoolNonce = true;
 
                     /* Can continue parsing */
                     continue;

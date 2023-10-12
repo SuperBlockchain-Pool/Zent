@@ -1157,7 +1157,7 @@ std::tuple<Error, uint16_t> RpcServer::getBlockTemplate(
 
     std::vector<uint8_t> blockBlob = CryptoNote::toBinaryArray(blockTemplate);
 
-    const auto transactionPublicKey = Utilities::getTransactionPublicKeyFromExtra(
+    const auto transactionPrivateKey = Utilities::getTransactionPrivateKeyFromExtra(
         blockTemplate.baseTransaction.extra
     );
 
@@ -1165,17 +1165,17 @@ std::tuple<Error, uint16_t> RpcServer::getBlockTemplate(
 
     if (reserveSize > 0)
     {
-        /* Find where in the block blob the transaction public key is */
+        /* Find where in the block blob the pool nonce value is */
         const auto it = std::search(
             blockBlob.begin(),
             blockBlob.end(),
-            std::begin(transactionPublicKey.data),
-            std::end(transactionPublicKey.data)
+            std::begin(transactionPrivateKey.data),
+            std::end(transactionPrivateKey.data)
         );
 
         /* The reserved offset is past the transactionPublicKey, then past
          * the extra nonce tags */
-        reservedOffset = (it - blockBlob.begin()) + sizeof(transactionPublicKey) + 2;
+        reservedOffset = (it - blockBlob.begin()) + sizeof(transactionPrivateKey) + 2;
 
         if (reservedOffset + reserveSize > blockBlob.size())
         {
