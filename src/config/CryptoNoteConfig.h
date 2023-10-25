@@ -92,7 +92,7 @@ namespace CryptoNote
          * to the underlying storage cost / page sizes for storing a transaction. */
         const uint64_t FEE_PER_BYTE_CHUNK_SIZE = 256;
 
-        const double MINIMUM_FEE_PER_BYTE_V1 = 25.6 / FEE_PER_BYTE_CHUNK_SIZE;
+        const double MINIMUM_FEE_PER_BYTE_V1 = 25 / FEE_PER_BYTE_CHUNK_SIZE;
         
         /* Height for our first fee to byte change to take effect. */
         const uint64_t MINIMUM_FEE_PER_BYTE_V1_HEIGHT = 2200000;
@@ -223,7 +223,7 @@ namespace CryptoNote
 
         const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1 = 90;
 
-        const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1_HEIGHT = 2200000;
+        const size_t NORMAL_TX_MAX_OUTPUT_COUNT_V1_HEIGHT = 2600000;
 
         const uint32_t UPGRADE_HEIGHT_V2 = 1;
 
