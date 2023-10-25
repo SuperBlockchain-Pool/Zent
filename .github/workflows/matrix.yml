@@ -204,7 +204,7 @@ jobs:
           ${STRIP} ${TARGETS}
       # Test the crypto
       - name: Test Crypto
-        if: matrix.build_name != 'Ubuntu 22.04 - aarch64' && matrix.build_name != 'Ubuntu 22.04 - GCC 11'
+        if: matrix.build_name != 'Ubuntu 22.04 - aarch64'
         run: |
           cd build/src
           ./cryptotest      
