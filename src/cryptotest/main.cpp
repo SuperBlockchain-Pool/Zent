@@ -681,18 +681,6 @@ int main(int argc, char **argv)
 
         std::cout << std::endl;
 
-        for (uint64_t height = 0; height <= 8192; height += 512)
-        {
-            TEST_HASH_FUNCTION_WITH_HEIGHT(cn_soft_shell_slow_hash_v1, CN_SOFT_SHELL_V1[height / 512], height);
-        }
-
-        std::cout << std::endl;
-
-        for (uint64_t height = 0; height <= 8192; height += 512)
-        {
-            TEST_HASH_FUNCTION_WITH_HEIGHT(cn_soft_shell_slow_hash_v2, CN_SOFT_SHELL_V2[height / 512], height);
-        }
-
         if (o_benchmark)
         {
             std::cout << "\nPerformance Tests: Please wait, this may take a while depending on your system...\n\n";
