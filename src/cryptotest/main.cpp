@@ -683,13 +683,6 @@ int main(int argc, char **argv)
 
         for (uint64_t height = 0; height <= 8192; height += 512)
         {
-            TEST_HASH_FUNCTION_WITH_HEIGHT(cn_soft_shell_slow_hash_v0, CN_SOFT_SHELL_V0[height / 512], height);
-        }
-
-        std::cout << std::endl;
-
-        for (uint64_t height = 0; height <= 8192; height += 512)
-        {
             TEST_HASH_FUNCTION_WITH_HEIGHT(cn_soft_shell_slow_hash_v1, CN_SOFT_SHELL_V1[height / 512], height);
         }
 
