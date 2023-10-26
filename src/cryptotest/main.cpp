@@ -45,8 +45,6 @@ const std::string CN_TURTLE_SLOW_HASH_V0 = "546c3f1badd7c1232c7a3b88cdb013f7f611
 
 const std::string CN_TURTLE_SLOW_HASH_V1 = "29e7831780a0ab930e0fe3b965f30e8a44d9b3f9ad2241d67cfbfea3ed62a64e";
 
-const std::string CN_TURTLE_SLOW_HASH_V2 = "fc67dfccb5fc90d7855ae903361eabd76f1e40a22a72ad3ef2d6ad27b5a60ce5";
-
 const std::string CN_TURTLE_LITE_SLOW_HASH_V0 = "5e1891a15d5d85c09baf4a3bbe33675cfa3f77229c8ad66c01779e590528d6d3";
 
 const std::string CN_TURTLE_LITE_SLOW_HASH_V1 = "ae7f864a7a2f2b07dcef253581e60a014972b9655a152341cb989164761c180a";
@@ -670,7 +668,6 @@ int main(int argc, char **argv)
 
         TEST_HASH_FUNCTION(cn_turtle_slow_hash_v0, CN_TURTLE_SLOW_HASH_V0);
         TEST_HASH_FUNCTION(cn_turtle_slow_hash_v1, CN_TURTLE_SLOW_HASH_V1);
-        TEST_HASH_FUNCTION(cn_turtle_slow_hash_v2, CN_TURTLE_SLOW_HASH_V2);
 
         std::cout << std::endl;
 
@@ -723,7 +720,6 @@ int main(int argc, char **argv)
 
             BENCHMARK(cn_turtle_slow_hash_v0, o_iterations_long);
             BENCHMARK(cn_turtle_slow_hash_v1, o_iterations_long);
-            BENCHMARK(cn_turtle_slow_hash_v2, o_iterations_long);
 
             BENCHMARK(cn_turtle_lite_slow_hash_v0, o_iterations_long);
             BENCHMARK(cn_turtle_lite_slow_hash_v1, o_iterations_long);
