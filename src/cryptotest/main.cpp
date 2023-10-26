@@ -33,15 +33,7 @@ const std::string CN_SLOW_HASH_V2 = "871fcd6823f6a879bb3f33951c8e8e891d4043880b0
 
 const std::string CN_LITE_SLOW_HASH_V0 = "28a22bad3f93d1408fca472eb5ad1cbe75f21d053c8ce5b3af105a57713e21dd";
 
-
-
 const std::string CN_LITE_SLOW_HASH_V2 = "b7e78fab22eb19cb8c9c3afe034fb53390321511bab6ab4915cd538a630c3c62";
-
-const std::string CN_DARK_SLOW_HASH_V0 = "bea42eadd78614f875e55bb972aa5ec54a5edf2dd7068220fda26bf4b1080fb8";
-
-const std::string CN_DARK_SLOW_HASH_V1 = "d18cb32bd5b465e5a7ba4763d60f88b5792f24e513306f1052954294b737e871";
-
-const std::string CN_DARK_SLOW_HASH_V2 = "a18a14d94efea108757a42633a1b4d4dc11838084c3c4347850d39ab5211a91f";
 
 const std::string CN_DARK_LITE_SLOW_HASH_V0 = "faa7884d9c08126eb164814aeba6547b5d6064277a09fb6b414f5dbc9d01eb2b";
 
@@ -670,12 +662,6 @@ int main(int argc, char **argv)
 
         std::cout << std::endl;
 
-        TEST_HASH_FUNCTION(cn_dark_slow_hash_v0, CN_DARK_SLOW_HASH_V0);
-        TEST_HASH_FUNCTION(cn_dark_slow_hash_v1, CN_DARK_SLOW_HASH_V1);
-        TEST_HASH_FUNCTION(cn_dark_slow_hash_v2, CN_DARK_SLOW_HASH_V2);
-
-        std::cout << std::endl;
-
         TEST_HASH_FUNCTION(cn_dark_lite_slow_hash_v0, CN_DARK_LITE_SLOW_HASH_V0);
         TEST_HASH_FUNCTION(cn_dark_lite_slow_hash_v1, CN_DARK_LITE_SLOW_HASH_V1);
         TEST_HASH_FUNCTION(cn_dark_lite_slow_hash_v2, CN_DARK_LITE_SLOW_HASH_V2);
@@ -730,10 +716,6 @@ int main(int argc, char **argv)
 
             BENCHMARK(cn_lite_slow_hash_v0, o_iterations);
             BENCHMARK(cn_lite_slow_hash_v2, o_iterations);
-
-            BENCHMARK(cn_dark_slow_hash_v0, o_iterations);
-            BENCHMARK(cn_dark_slow_hash_v1, o_iterations);
-            BENCHMARK(cn_dark_slow_hash_v2, o_iterations);
 
             BENCHMARK(cn_dark_lite_slow_hash_v0, o_iterations);
             BENCHMARK(cn_dark_lite_slow_hash_v1, o_iterations);
