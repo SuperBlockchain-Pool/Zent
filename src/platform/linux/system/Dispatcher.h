@@ -7,7 +7,6 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <stdexcept>
 #include <functional>
 #include <queue>
 #include <stack>
