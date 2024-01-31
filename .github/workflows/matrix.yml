@@ -338,7 +338,7 @@ jobs:
           key: clcache-windows
 
       - name: Install OpenSSL
-        run: choco install openssl
+        run: choco install openssl@3.1.0
 
       # Install boost
       - name: Install Boost 1.78.0
